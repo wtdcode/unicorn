@@ -36,7 +36,7 @@ jobs:
               mingw: MINGW64,
               mingw-arch: x86_64,
               artifact: 'windows_mingw64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja'
             }
@@ -50,7 +50,7 @@ jobs:
               mingw: MINGW64,
               mingw-arch: x86_64,
               artifact: 'windows_mingw64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja'
             }
@@ -64,7 +64,7 @@ jobs:
           #     mingw: MINGW32,
           #     mingw-arch: i686,
           #     artifact: 'windows_mingw32.7z',
-          #     build_type: 'Debug',
+          #     build_type: 'Release',
           #     archiver: '7z a',
           #     generators: 'Ninja'
           #   }
@@ -78,7 +78,7 @@ jobs:
           #     mingw: MINGW32,
           #     mingw-arch: i686,
           #     artifact: 'windows_mingw32.7z',
-          #     build_type: 'Debug',
+          #     build_type: 'Release',
           #     archiver: '7z a',
           #     generators: 'Ninja'
           #   }
@@ -91,7 +91,7 @@ jobs:
               msvc-arch: x64,
               artifact: 'windows_msvc64_shared.7z',
               shared: 'yes',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Visual Studio 16 2019'
             }
@@ -104,7 +104,7 @@ jobs:
               msvc-arch: x86,
               artifact: 'windows_msvc32_shared.7z',
               shared: 'yes',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Visual Studio 16 2019'
             }
@@ -117,7 +117,7 @@ jobs:
               msvc-arch: x64,
               artifact: 'windows_msvc64_static.7z',
               shared: 'no',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Visual Studio 16 2019'
             }
@@ -130,7 +130,7 @@ jobs:
               msvc-arch: x86,
               artifact: 'windows_msvc32_static.7z',
               shared: 'no',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Visual Studio 16 2019'
             }
@@ -265,7 +265,7 @@ jobs:
               name: 'macos-x64 cmake shared',
               shared: 'yes',
               artifact: 'macos-cmake-shared-x64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7za a',
               generators: 'Ninja'
             }
@@ -277,7 +277,7 @@ jobs:
               name: 'macos-x64 cmake static',
               shared: 'no',
               artifact: 'macos-cmake-static-x64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7za a',
               generators: 'Ninja'
             }
@@ -288,7 +288,7 @@ jobs:
               python-ver: '3.8',
               name: 'android cmake',
               artifact: 'Android-x86_64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7za a',
               generators: 'Ninja'
             }
@@ -408,7 +408,7 @@ jobs:
               name: 'ubuntu-x64 cmake shared',
               shared: 'yes',
               artifact: 'ubuntu-cmake-shared-x64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja'
             }
@@ -420,7 +420,7 @@ jobs:
               name: 'ubuntu-x86 cmake shared',
               shared: 'yes',
               artifact: 'ubuntu-cmake-shared-x86.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja' 
             }
@@ -432,7 +432,7 @@ jobs:
               name: 'ubuntu-x64 cmake static',
               shared: 'no',
               artifact: 'ubuntu-cmake-static-x64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja'
             }
@@ -444,7 +444,7 @@ jobs:
               name: 'ubuntu-x86 cmake static',
               shared: 'no',
               artifact: 'ubuntu-cmake-static-x86.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja' 
             }
@@ -455,7 +455,7 @@ jobs:
               python-ver: '3.8',
               name: 'ubuntu-aarch64 cmake',
               artifact: 'ubuntu-cmake-aarch64.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja',
               distro: ubuntu20.04
@@ -467,7 +467,7 @@ jobs:
               python-ver: '3.8',
               name: 'ubuntu-ppc64le cmake',
               artifact: 'ubuntu-cmake-ppc64le.7z',
-              build_type: 'Debug',
+              build_type: 'Release',
               archiver: '7z a',
               generators: 'Ninja',
               distro: ubuntu20.04
