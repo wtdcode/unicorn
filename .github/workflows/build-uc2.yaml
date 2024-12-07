@@ -1,0 +1,9 @@
+name: test arm64
+on: [push]
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
