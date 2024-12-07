@@ -37,23 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # NOTE: aarch64 builds are super slow due to QEMU emulation. Making this to parallelize and speed up workflow
-          # i686 - manylinux
-          - { os: ubuntu-latest, arch: i686, cibw_build: 'cp38-manylinux' }
-          # i686 - musllinux
-          - { os: ubuntu-latest, arch: i686, cibw_build: 'cp38-musllinux' }
-          # x86_64 - manylinux
-          - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp38-manylinux' }
-          # x86_64 - musllinux
-          - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp38-musllinux' }
-          # aarch64 - manylinux
-          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp38-manylinux' }
-          # aarch64 - musllinux
-          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp38-musllinux' }
-          - { os: macos-13, arch: x86_64, cibw_build: '' }
           - { os: macos-latest, arch: arm64, cibw_build: '' }
-          - { os: windows-2019, arch: AMD64, cibw_build: '' }
-          - { os: windows-2019, arch: x86, cibw_build: '' }
 
     steps:
       - uses: actions/checkout@v4
@@ -153,47 +137,8 @@ jobs:
         with:
           package-dir: bindings/python
           output-dir: wheelhouse
-
-      # we re-tag cp38 wheel (just an old one) with py2 tag. Hacky but it works...
-      - name: '🚧 Python 2.7 wheels re-tagging - Windows'
-        if: matrix.os == 'windows-2019'
-        run: |
-          python -m pip install -U pip wheel && Get-ChildItem -Path wheelhouse/ -Filter *cp38*.whl | Foreach-Object {
-            python -m wheel tags --python-tag='py2' --abi-tag=none $_.FullName
-            break
-          }
-
-      - name: '🚧 Python 2.7 wheels re-tagging - Non-Windows'
-        if: matrix.os != 'windows-2019'
-        env:
-          PIP_BREAK_SYSTEM_PACKAGES: 1
-        run: |
-          python3 -m pip install -U pip wheel && python3 -m wheel tags --python-tag='py2' --abi-tag=none wheelhouse/*cp38*.whl
-
-      - uses: LizardByte/setup-python-action@master
-        if: (matrix.os == 'ubuntu-latest' && matrix.arch == 'x86_64' && matrix.cibw_build == 'cp38-manylinux') || matrix.os == 'macos-latest' || (matrix.os == 'windows-2019' && matrix.arch == 'AMD64')
-        with:
-          python-version: 2.7
-
-      - name: 'Python 2.7 tests - Windows'
-        if: matrix.os == 'windows-2019' && matrix.arch == 'AMD64'
-        run: |
-          C:\Python27\python.exe -m pip install -U pip pytest && Get-ChildItem -Path wheelhouse/ -Filter *py2*.whl | Foreach-Object {
-            C:\Python27\python.exe -m pip install $_.FullName
-            C:\Python27\python.exe -m pytest bindings/python/tests
-            break
-          }
-
-      # we install and test python2.7 wheels only on native arch
-      # NOTE: no python2.7 support for macos-13: https://github.com/LizardByte/setup-python-action/issues/2
-      - name: 'Python 2.7 tests - Non-Windows'
-        if: (matrix.os == 'ubuntu-latest' && matrix.arch == 'x86_64' && matrix.cibw_build == 'cp38-manylinux') || matrix.os == 'macos-latest'
-        run: python2 -m pip install wheelhouse/*py2*.whl && python2 -m pip install -U pip pytest && python2 -m pytest bindings/python/tests
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}-py38
-          path: ./wheelhouse/*.whl
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
   # Job to be executed to build all wheels for all platforms/architectures/python versions only for tag release
   build_wheels_all_versions:
@@ -371,7 +316,7 @@ jobs:
           path: bindings/python/dist/*.tar.gz
 
   publish:
-    needs: [ build_wheels_python38_only, build_wheels_all_versions, make_sdist ]
+    needs: [ build_wheels_python38_only, make_sdist ]
     environment: pypi
     permissions:
       id-token: write
