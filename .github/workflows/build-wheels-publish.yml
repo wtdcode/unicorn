@@ -26,7 +26,7 @@ on:
 
 env:
   # Enable DEBUG flag either according to the tag release or manual override
-  UNICORN_DEBUG: ${{ inputs.debugMode != '' && inputs.debugMode || startsWith(github.ref, 'refs/tags') && '0' || '1' }}
+  UNICORN_DEBUG: '0'
 
 jobs:
   # job to be executed for every push - testing purpose
