@@ -137,8 +137,8 @@ jobs:
         with:
           package-dir: bindings/python
           output-dir: wheelhouse
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
 
   # Job to be executed to build all wheels for all platforms/architectures/python versions only for tag release
   build_wheels_all_versions:
