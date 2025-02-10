@@ -191,24 +191,7 @@ jobs:
 
       - name: '🚧 Win MSVC 32 build'
         if: contains(matrix.config.name, 'MSVC 32')
-        shell: bash
-        run: |
-          choco install ninja
-          ninja --version
-          cmake --version
-          mkdir build
-          cmake \
-            -S . \
-            -B . \
-            -A "win32" \
-            -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
-            -G "${{ matrix.config.generators }}" \
-            -DCMAKE_INSTALL_PREFIX:PATH=instdir \
-            -DBUILD_SHARED_LIBS=${{ matrix.config.shared }}
-          cmake --build . --config ${{ env.BUILD_TYPE }}
-          cmake --install . --strip --config ${{ env.BUILD_TYPE }}
-          ctest -VV -C ${{ env.BUILD_TYPE }}
-          mv Debug instdir
+        uses: mxschmitt/action-tmate@v3
 
       - name: '🚧 Win MINGW build'
         if: contains(matrix.config.mingw, 'MINGW')
